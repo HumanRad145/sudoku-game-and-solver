@@ -44,19 +44,6 @@ function commitCellValue(cell, inputValue){
     }
 }
 
-function play_video(){
-    const result = Math.random() < 0.5 ? 0 : 1;
-    const video_name = ["no_solution_video","no_solution_glays"]
-    var video = document.getElementById(video_name[result]);
-    video.style.display = "block";
-    video.play();
-
-    video.onended = () => {
-        video.style.display = "none";
-    };
-
-}
-
 function alerting(){
     alert("Button Clicked");
 }
@@ -102,7 +89,7 @@ function updateSudokuOnPage(solved){
 async function solveSoduku(){
     const board = scrapeSudokuFromPage();
 
-    const response = await fetch("http://127.0.0.1:8000/get_sudoku_board", {
+    const response = await fetch("https://sudoku-game-and-solver.onrender.com/get_sudoku_board", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({board})
