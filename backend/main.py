@@ -19,7 +19,7 @@ async def get_sudoku_board(payload: SudokuPayload):
     input_board = "\n".join(" ".join(str(x) for x in row)for row in board) #have spaces in input, might need fixing later on 
 
     #run cpp solver
-    result = subprocess.run(["./sudoku_solver_backend.exe"],
+    result = subprocess.run(["./sudoku_solver_backend"], #with .exe when running locally and on windows / without exe for render and linux
                             input=input_board,
                             text=True,
                             capture_output=True)
