@@ -1,7 +1,8 @@
-from fastapi import FastAPI, Body, Request
+from fastapi import FastAPI, Body, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import subprocess
+import json
 
 app = FastAPI()
 
@@ -10,6 +11,23 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, 
 
 class SudokuPayload(BaseModel):
     board: list[list[int]]
+
+class ConnectionManager:
+    def __init__ (self):
+        self.active_connections: list[WebSocket] = []
+    async def connect(self, websocket: WebSocket):
+        await websocket.accept()
+        self.active_connections.append(websocket)
+    def disconnect(self, websocket: WebSocket):
+        if websocket in self.active_connections:
+            self.active_connections.remove(websocket)
+    async def send_board(self, board: str, websocket: WebSocket):
+        await websocket.send_text(board)
+    async def broadcast(self, board: str):
+        for connection in self.active_connections:
+            await connection.send_text(board)
+
+manager = ConnectionManager()
 
 @app.post('/get_sudoku_board')
 
@@ -28,4 +46,15 @@ async def get_sudoku_board(payload: SudokuPayload):
     solved = [nums[i*9:(i+1)*9] for i in range(9)]
 
     return {"solved": solved}
-   
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await manager.connect(websocket)
+    try:
+        while True:
+            data = await websocket.receive_text()
+            string = json.loads(data)
+            board = string['board']
+            await manager.broadcast(json.dumps({"type": "board-update", "board": board}))
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)

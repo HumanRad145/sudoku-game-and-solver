@@ -28,6 +28,7 @@ document.addEventListener('keydown', function(event){
     } else if (event.key == 'Backspace' || event.key == 'Delete' || event.key == 'Space'){
         activeCell.textContent = event.key;
     }
+    send_board();
 
 })
 
@@ -64,6 +65,19 @@ function scrapeSudokuFromPage(){
     return board;
 }
 
+function updateSudoku(solved){
+    const rows = document.querySelectorAll("#sudoku tr");
+    for (let i=0; i<9; i++){
+        const cells = rows[i].querySelectorAll("td");
+        for (let j=0; j<9; j++){
+            if (solved[i][j] == 0){
+                cells[j].innerHTML = ' ';
+            } else { cells[j].innerHTML = solved[i][j];}
+        }
+    }
+
+}
+
 const link = document.getElementById("go-back-to-solver");
 
 link.addEventListener('click', function(event) {
@@ -84,7 +98,21 @@ number_btns.forEach(button => {
         allCells.forEach(cell => {
             if (cell.style.backgroundColor == "lightblue" || cell.style.backgroundColor == "rgb(173, 216, 230)"){
                 cell.textContent = number;
+                send_board();
             }
         });
     })
 })
+
+var ws = new WebSocket("ws://sudoku-game-and-solver.onrender.com/ws");
+ws.onmessage = function(event){
+    const data = JSON.parse(event.data);
+    updateSudoku(data.board);
+}
+
+function send_board(){
+    const board = scrapeSudokuFromPage();
+    if (ws.readyState === WebSocket.OPEN){
+        ws.send(JSON.stringify({ board: board}));
+    }
+}
