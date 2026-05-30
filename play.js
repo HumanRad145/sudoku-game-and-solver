@@ -107,10 +107,7 @@ number_btns.forEach(button => {
         const allCells = document.querySelectorAll("#sudoku td");
         allCells.forEach(cell => {
             if (cell.style.backgroundColor == "lightblue" || cell.style.backgroundColor == "rgb(173, 216, 230)"){
-                console.log("Is selected");
                 cell.textContent = number;
-            } else {
-                console.log("not selected");
             }
         });
     })
