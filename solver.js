@@ -12,9 +12,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.querySelectorAll("#sudoku td").forEach((cell) => {
     cell.addEventListener("click", () => {
-        makeCellEditable(cell);
+        selectCell(cell);
+        //makeCellEditable(cell);
     });
 });
+
+document.addEventListener('click', function(event){
+    const table = document.getElementById('sudoku');
+    const buttons = document.getElementById('sudoku-controls');
+
+    if(!table.contains(event.target) && !buttons.contains(event.target)){
+        const allCells = document.querySelectorAll("#sudoku td");
+        allCells.forEach(cell => cell.style.backgroundColor = "");
+    }
+})
+
+function selectCell(cell){
+    const rows = document.querySelectorAll("#sudoku tr");
+    for (let i=0; i < rows.length; i++){
+        const cells = rows[i].querySelectorAll("td");
+        for (let j=0; j < cells.length; j++){
+            cells[j].style.backgroundColor = "";
+        }
+    }
+
+    cell.style.backgroundColor = "lightblue"; 
+
+}
 
 function makeCellEditable(cell){
     const oldValue = cell.textContent.trim();
@@ -145,4 +169,21 @@ function undoSolve(){
     }
 
 }
+
+const number_btns = document.querySelectorAll('.ctrl-btn');
+
+number_btns.forEach(button => {
+    button.addEventListener('click', (e) => {
+        const number = e.target.innerText;
+        const allCells = document.querySelectorAll("#sudoku td");
+        allCells.forEach(cell => {
+            if (cell.style.backgroundColor == "lightblue" || cell.style.backgroundColor == "rgb(173, 216, 230)"){
+                console.log("Is selected");
+                cell.textContent = number;
+            } else {
+                console.log("not selected");
+            }
+        });
+    })
+})
 
