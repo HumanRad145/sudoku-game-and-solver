@@ -1,8 +1,32 @@
 document.querySelectorAll("#sudoku td").forEach((cell) => {
     cell.addEventListener("click", () => {
-        makeCellEditable(cell);
+        selectCell(cell);
+        //makeCellEditable(cell);
     });
 });
+
+document.addEventListener('click', function(event){
+    const table = document.getElementById('sudoku');
+    const buttons = document.getElementById('sudoku-controls');
+
+    if(!table.contains(event.target) && !buttons.contains(event.target)){
+        const allCells = document.querySelectorAll("#sudoku td");
+        allCells.forEach(cell => cell.style.backgroundColor = "");
+    }
+})
+
+function selectCell(cell){
+    const rows = document.querySelectorAll("#sudoku tr");
+    for (let i=0; i < rows.length; i++){
+        const cells = rows[i].querySelectorAll("td");
+        for (let j=0; j < cells.length; j++){
+            cells[j].style.backgroundColor = "";
+        }
+    }
+
+    cell.style.backgroundColor = "lightblue"; 
+
+}
 
 function makeCellEditable(cell){
     const oldValue = cell.textContent.trim();
@@ -64,60 +88,30 @@ function scrapeSudokuFromPage(){
     return board;
 }
 
-function updateSudokuOnPage(solved){
-    if (solved.length !== 9 || solved[0].length !== 9) {
-        console.log("Invalid solved board");
-        alert("Unsolvable board");
-        play_video();
-        return;
-    }
-    const rows = document.querySelectorAll("#sudoku tr");
-    for (let i=0; i<9; i++){
-        const cells = rows[i].querySelectorAll("td");
-        for (let j=0; j<9; j++){
-            if (cells[j].textContent != solved[i][j]){
-                cells[j].innerHTML = `<span style="color: blue">${solved[i][j]}</span>`;
-            }
-        }
-    }
+const link = document.getElementById("go-back-to-solver");
 
-}
+link.addEventListener('click', function(event) {
+    event.preventDefault();
 
-async function solveSoduku(){
     const board = scrapeSudokuFromPage();
+    sessionStorage.setItem('board', JSON.stringify(board));
 
-    const response = await fetch("https://sudoku-game-and-solver.onrender.com/get_sudoku_board", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({board})
-    });
+    window.location.href = event.target.href;
+})
 
-    const data = await response.json();
-    updateSudokuOnPage(data.solved);
-}
+const number_btns = document.querySelectorAll('.ctrl-btn');
 
-function clearBoard(){
-    const rows = document.querySelectorAll("#sudoku tr");
-    for (let i=0; i<9; i++){
-        const cells = rows[i].querySelectorAll("td");
-        for (let j=0; j<9; j++){
-            cells[j].textContent = '';
-        }
-    }
-
-}
-
-function undoSolve(){
-    const rows = document.querySelectorAll("#sudoku tr");
-    for (let i=0; i<9; i++){
-        const cells = rows[i].querySelectorAll("td");
-        for (let j=0; j<9; j++){
-            const span = cells[j].querySelector("span");
-            if (span && span.style.color === "blue"){
-                cells[j].innerHTML = `<span style="color: black">${""}</span>`;
+number_btns.forEach(button => {
+    button.addEventListener('click', (e) => {
+        const number = e.target.innerText;
+        const allCells = document.querySelectorAll("#sudoku td");
+        allCells.forEach(cell => {
+            if (cell.style.backgroundColor == "lightblue" || cell.style.backgroundColor == "rgb(173, 216, 230)"){
+                console.log("Is selected");
+                cell.textContent = number;
+            } else {
+                console.log("not selected");
             }
-        }
-    }
-
-}
-
+        });
+    })
+})

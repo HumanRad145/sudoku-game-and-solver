@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudoku Solver</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js" defer></script>
+    <script src="play.js" defer></script>
 </head>
 <body>
     <div id="header-container">
@@ -20,40 +20,42 @@
             </div>
         </a>
     </div>
+    
+    <div id="sudoku-grid">
+        <table id="sudoku" align="center">
+            <colgroup><col><col><col></colgroup>
+            <colgroup><col><col><col></colgroup>
+            <colgroup><col><col><col></colgroup>
+            <tbody>
+                <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
+                <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
+                <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
+            <tbody>
+                <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td> 
+                <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
+                <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td> 
+            <tbody>
+                <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td> 
+                <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
+                <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td> 
+        </table>
+    </div>
 
-    <style>
-    table { border-collapse: collapse; font-family: Calibri, sans-serif;}
-    colgroup, tbody { border: solid medium; }
-    td { border: solid thin; height: 65px; width: 65px; text-align: center; padding: 0; }
-    </style>
-
-    <table id="sudoku" align="center">
-        <colgroup><col><col><col></colgroup>
-        <colgroup><col><col><col></colgroup>
-        <colgroup><col><col><col></colgroup>
-        <tbody>
-            <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td> 
-            <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
-            <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td> 
-        <tbody>
-            <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td> 
-            <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
-            <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
-        <tbody>
-            <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td> 
-            <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
-            <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td> 
-    </table>
+    <div id="sudoku-controls">
+        <button class="ctrl-btn" type="button">1</button>
+        <button class="ctrl-btn" type="button">2</button>
+        <button class="ctrl-btn" type="button">3</button>
+        <button class="ctrl-btn" type="button">4</button>
+        <button class="ctrl-btn" type="button">5</button>
+        <button class="ctrl-btn" type="button">6</button>
+        <button class="ctrl-btn" type="button">7</button>
+        <button class="ctrl-btn" type="button">8</button>
+        <button class="ctrl-btn" type="button">9</button>
+    </div>
 
     <br>
     <div id="buttons" align="center">
-
-        <a href="index.html">
-            <div>
-                <p style="color:blue">Go to sudoku solver with this board</p>
-            </div>
-        </a>
-
+        <a href="index.html" id="go-back-to-solver"> Solve this with sudoku solver </a>
         <script> 
             const button = document.getElementById("button");
             console.log(button);

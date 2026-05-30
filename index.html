@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudoku Solver</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js" defer></script>
+    <script src="solver.js" defer></script>
 </head>
 <body>
     <div id="header-container">
@@ -21,23 +21,37 @@
         </a>
     </div>
 
-    <table id="sudoku" align="center">
-        <colgroup><col><col><col></colgroup>
-        <colgroup><col><col><col></colgroup>
-        <colgroup><col><col><col></colgroup>
-        <tbody>
-            <tr> <td>1 <td>  <td>3 <td>6 <td>  <td>4 <td>7 <td>  <td>9
-            <tr> <td>  <td>2 <td>  <td>  <td>9 <td>  <td>  <td>1 <td>
-            <tr> <td>7 <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>6
-        <tbody>
-            <tr> <td>2 <td>  <td>4 <td>  <td>3 <td>  <td>9 <td>  <td>8
-            <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
-            <tr> <td>5 <td>  <td>  <td>9 <td>  <td>7 <td>  <td>  <td>1
-        <tbody>
-            <tr> <td>6 <td>  <td>  <td>  <td>5 <td>  <td>  <td>  <td>2
-            <tr> <td>  <td>  <td>  <td>  <td>7 <td>  <td>  <td>  <td>
-            <tr> <td>9 <td>  <td>  <td>8 <td>  <td>2 <td>  <td>  <td>5
-    </table>
+    <div id="sudoku-grid">
+        <table id="sudoku" align="center">
+            <colgroup><col><col><col></colgroup>
+            <colgroup><col><col><col></colgroup>
+            <colgroup><col><col><col></colgroup>
+            <tbody>
+                <tr> <td>1 <td>  <td>3 <td>6 <td>  <td>4 <td>7 <td>  <td>9
+                <tr> <td>  <td>2 <td>  <td>  <td>9 <td>  <td>  <td>1 <td>
+                <tr> <td>7 <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>6
+            <tbody>
+                <tr> <td>2 <td>  <td>4 <td>  <td>3 <td>  <td>9 <td>  <td>8
+                <tr> <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>  <td>
+                <tr> <td>5 <td>  <td>  <td>9 <td>  <td>7 <td>  <td>  <td>1
+            <tbody>
+                <tr> <td>6 <td>  <td>  <td>  <td>5 <td>  <td>  <td>  <td>2
+                <tr> <td>  <td>  <td>  <td>  <td>7 <td>  <td>  <td>  <td>
+                <tr> <td>9 <td>  <td>  <td>8 <td>  <td>2 <td>  <td>  <td>5
+        </table>
+    </div>
+
+    <div id="sudoku-controls">
+        <button class="ctrl-btn" type="button">1</button>
+        <button class="ctrl-btn" type="button">2</button>
+        <button class="ctrl-btn" type="button">3</button>
+        <button class="ctrl-btn" type="button">4</button>
+        <button class="ctrl-btn" type="button">5</button>
+        <button class="ctrl-btn" type="button">6</button>
+        <button class="ctrl-btn" type="button">7</button>
+        <button class="ctrl-btn" type="button">8</button>
+        <button class="ctrl-btn" type="button">9</button>
+    </div>
 
     <br>
     <div id="buttons" align="center">

@@ -1,3 +1,15 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const savedBoard = sessionStorage.getItem('board');
+    if (savedBoard){
+        const board = JSON.parse(savedBoard);
+        console.log('Here');
+        console.log('board', board);
+        updateReturnSudoku(board);
+        console.log('After updating')
+        
+    }
+});
+
 document.querySelectorAll("#sudoku td").forEach((cell) => {
     cell.addEventListener("click", () => {
         makeCellEditable(cell);
@@ -78,6 +90,19 @@ function updateSudokuOnPage(solved){
             if (cells[j].textContent != solved[i][j]){
                 cells[j].innerHTML = `<span style="color: blue">${solved[i][j]}</span>`;
             }
+        }
+    }
+
+}
+
+function updateReturnSudoku(solved){
+    const rows = document.querySelectorAll("#sudoku tr");
+    for (let i=0; i<9; i++){
+        const cells = rows[i].querySelectorAll("td");
+        for (let j=0; j<9; j++){
+            if (solved[i][j] == 0){
+                cells[j].innerHTML = ' ';
+            } else { cells[j].innerHTML = solved[i][j];}
         }
     }
 
