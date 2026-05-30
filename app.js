@@ -47,6 +47,7 @@ function commitCellValue(cell, inputValue){
 function alerting(){
     alert("Button Clicked");
 }
+
 function scrapeSudokuFromPage(){
     const board = [];
     const rows = document.querySelectorAll("#sudoku tr");
@@ -122,6 +123,11 @@ function undoSolve(){
         }
     }
 
+}
+
+function copy_board_from_play(){
+    const board = scrapeSudokuFromPage();
+    
 }
 
 const board = scrapeSudokuFromPage();
