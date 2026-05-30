@@ -27,6 +27,23 @@ document.addEventListener('click', function(event){
     }
 })
 
+document.addEventListener('keydown', function(event){
+    const allCells = document.querySelectorAll("#sudoku td");
+    let activeCell = null;
+    allCells.forEach(cell => {
+        if (cell.style.backgroundColor == "lightblue" || cell.style.backgroundColor == "rgb(173, 216, 230)"){
+            activeCell = cell;
+        }
+    });
+    if (!activeCell){ return; }
+    if (event.key >= '1' && event.key <= 9){
+        activeCell.textContent = event.key;
+    } else if (event.key == 'Backspace' || event.key == 'Delete' || event.key == 'Space'){
+        activeCell.textContent = event.key;
+    }
+
+})
+
 function selectCell(cell){
     const rows = document.querySelectorAll("#sudoku tr");
     for (let i=0; i < rows.length; i++){
@@ -38,46 +55,6 @@ function selectCell(cell){
 
     cell.style.backgroundColor = "lightblue"; 
 
-}
-
-function makeCellEditable(cell){
-    const oldValue = cell.textContent.trim();
-    const input = document.createElement("input");
-
-    input.type = "text";
-    input.value = oldValue;   // ← this is the important part
-    input.maxLength = 1;
-    input.style.width = "20px";
-    input.style.textAlign = "center";
-    input.style.border = "none";
-    input.style.outline = "none";
-
-
-    cell.innerHTML = "";
-    cell.appendChild(input);
-
-    input.focus();
-
-    input.addEventListener("blur", () => {
-        commitCellValue(cell, input.value);
-    });
-
-    input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            input.blur();
-        }
-    });
-
-}
-
-function commitCellValue(cell, inputValue){
-    inputValue = inputValue.trim()
-    if (inputValue >= 1 && inputValue <= 9 || inputValue == ""){
-        cell.textContent = inputValue;
-    } else {
-        cell.textContent = "";
-        alert("Invalid number");
-    }
 }
 
 function scrapeSudokuFromPage(){
