@@ -105,15 +105,17 @@ function updateSudoku(board, colors=null){
     for (let i=0; i<9; i++){
         const cells = rows[i].querySelectorAll("td");
         for (let j=0; j<9; j++){
-            if (board[i][j] == 0){
-                cells[j].textContent = ' ';
-            } else { 
-                cells[j].textContent = board[i][j];
-            }
             if (colors){
                 cells[j].style.color = colors[i*9+j];
             } else {
                 cells[j].style.color = "black";
+            }
+            if (board[i][j] == 0){
+                cells[j].textContent = '';
+                cells[j].style.color = "rgb(20, 78, 133)";
+
+            } else { 
+                cells[j].textContent = board[i][j];
             }
         }
     }
