@@ -38,8 +38,8 @@ document.addEventListener('keydown', function(event){
     if (!activeCell){ return; }
     if (event.key >= '1' && event.key <= 9){
         activeCell.textContent = event.key;
-    } else if (event.key == 'Backspace' || event.key == 'Delete' || event.key == 'Space'){
-        activeCell.textContent = event.key;
+    } else if (event.key == 'Backspace' || event.key == 'Delete' || event.key === ' '){
+        activeCell.textContent = "";
     }
 
 })

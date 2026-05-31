@@ -18,7 +18,7 @@
 #header-container {
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 40px;
     margin-left: 12px;
     gap: 20px;
 }
@@ -46,7 +46,7 @@ border-collapse: collapse;
 table-layout: fixed;
 width: min(94vw, 540px);
 height: min(94vw, 540px);
-margin: 30px auto;
+/*margin: 30px auto;*/
 }
 
 #sudoku td {
@@ -105,3 +105,14 @@ justify-content: center;
     background-color: lightblue !important;
 }
 
+#difficulty {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.diff-btn {
+    text-decoration: underline;
+    cursor: pointer;
+}

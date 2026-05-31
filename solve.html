@@ -20,9 +20,15 @@
             </div>
         </a>
     </div>
+
+    <div id="difficulty" align="center">
+        <p class="diff-btn">Easy</p>
+        <p class="diff-btn">Hard</p>
+        <p class="diff-btn">Extreme</p>
+    </div>
     
     <div id="sudoku-grid">
-        <table id="sudoku" align="center">
+        <table id="sudoku" align="center" style="margin-bottom: 25px;">
             <colgroup><col><col><col></colgroup>
             <colgroup><col><col><col></colgroup>
             <colgroup><col><col><col></colgroup>
@@ -42,7 +48,7 @@
     </div>
 
     <div id="sudoku-controls">
-        <button class="ctrl-btn" type="button">1</button>
+        <button class="ctrl-btn" type="button" >1</button>
         <button class="ctrl-btn" type="button">2</button>
         <button class="ctrl-btn" type="button">3</button>
         <button class="ctrl-btn" type="button">4</button>
@@ -56,10 +62,6 @@
     <br>
     <div id="buttons" align="center">
         <a href="index.html" id="go-back-to-solver"> Solve this with sudoku solver </a>
-        <script> 
-            const button = document.getElementById("button");
-            console.log(button);
-        </script>
     </div>
     
 </body>

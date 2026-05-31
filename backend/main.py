@@ -55,6 +55,7 @@ async def websocket_endpoint(websocket: WebSocket):
             data = await websocket.receive_text()
             string = json.loads(data)
             board = string['board']
-            await manager.broadcast(json.dumps({"type": "board-update", "board": board}))
+            colors = string['colors']
+            await manager.broadcast(json.dumps({"type": "board-update", "board": board, "colors": colors}))
     except WebSocketDisconnect:
         manager.disconnect(websocket)

@@ -25,8 +25,10 @@ document.addEventListener('keydown', function(event){
     if (!activeCell){ return; }
     if (event.key >= '1' && event.key <= 9){
         activeCell.textContent = event.key;
-    } else if (event.key == 'Backspace' || event.key == 'Delete' || event.key == 'Space'){
-        activeCell.textContent = event.key;
+        activeCell.style.color = "rgb(20, 78, 133)";
+    } else if (event.key == 'Backspace' || event.key == 'Delete' || event.key === ' '){
+        activeCell.textContent = "";
+
     }
     send_board();
 
@@ -65,14 +67,26 @@ function scrapeSudokuFromPage(){
     return board;
 }
 
-function updateSudoku(solved){
+function scrapeColorFromPage(){
+    const colors = [];
+    document.querySelectorAll("#sudoku td").forEach((cell) => {
+        colors.push(window.getComputedStyle(cell).color);
+    });
+    return colors;
+}
+
+function updateSudoku(board, colors){
     const rows = document.querySelectorAll("#sudoku tr");
     for (let i=0; i<9; i++){
         const cells = rows[i].querySelectorAll("td");
         for (let j=0; j<9; j++){
-            if (solved[i][j] == 0){
-                cells[j].innerHTML = ' ';
-            } else { cells[j].innerHTML = solved[i][j];}
+            if (board[i][j] == 0){
+                cells[j].textContent = ' ';
+                cells[j].style.color = colors[i*9+j];
+            } else { 
+                cells[j].textContent = board[i][j];
+                cells[j].style.color = colors[i*9+j];
+            }
         }
     }
 
@@ -98,21 +112,24 @@ number_btns.forEach(button => {
         allCells.forEach(cell => {
             if (cell.style.backgroundColor == "lightblue" || cell.style.backgroundColor == "rgb(173, 216, 230)"){
                 cell.textContent = number;
+                cell.style.color = "rgb(20, 78, 133)";
+                console.log(cell, cell.style.color);
                 send_board();
             }
         });
     })
 })
 
-var ws = new WebSocket("ws://sudoku-game-and-solver.onrender.com/ws");
+var ws = new WebSocket("ws://127.0.0.1:8000/ws");
 ws.onmessage = function(event){
     const data = JSON.parse(event.data);
-    updateSudoku(data.board);
+    updateSudoku(data.board, data.colors);
 }
 
 function send_board(){
     const board = scrapeSudokuFromPage();
+    const colors = scrapeColorFromPage();
     if (ws.readyState === WebSocket.OPEN){
-        ws.send(JSON.stringify({ board: board}));
+        ws.send(JSON.stringify({ board: board, colors: colors}));
     }
 }
