@@ -143,12 +143,11 @@ number_btns.forEach(button => {
                 activeCell = cell;
             }
         });
-        if (cell.style.color == "black" && cell.textContent  >= 1 && cell.textContent <= 9){
+        if (activeCell.style.color == "black" && activeCell.textContent  >= 1 && activeCell.textContent <= 9){
             return;
         }
-        cell.textContent = number;
-        cell.style.color = "rgb(20, 78, 133)";
-        console.log(cell, cell.style.color);
+        activeCell.textContent = number;
+        activeCell.style.color = "rgb(20, 78, 133)";
         send_board();
         if (checkDone() ==  true){
             if (checkCorrect() == true){
