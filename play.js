@@ -29,7 +29,9 @@ document.addEventListener('keydown', function(event){
         activeCell.style.color = "rgb(20, 78, 133)";
         if (checkDone() ==  true){
             if (checkCorrect() == true){
-
+                document.getElementById('solved-popup-window').style.display = 'flex';
+            } else {
+                showPopup('wrong-popup-window', 2000)
             }
         }
         
@@ -41,6 +43,15 @@ document.addEventListener('keydown', function(event){
     send_board();
 
 })
+
+function showPopup(popupId, duration = 3000){
+    const popup = document.getElementById(popupId);
+    popup.style.display = 'flex';
+
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, duration);
+}
 
 function selectCell(cell){
     const rows = document.querySelectorAll("#sudoku tr");
@@ -175,7 +186,7 @@ async function getGeneratedBoard(){
 function checkDone(){
     const cells = document.querySelectorAll("#sudoku td");
     for (let cell of cells){
-        if (cell.textContent == "" || cell.textContent == " "){
+        if (cell.textContent.trim() == ""){
             console.log("Not yet done")
             return false;
         }
