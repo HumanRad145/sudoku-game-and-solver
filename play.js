@@ -22,12 +22,13 @@ document.addEventListener('keydown', function(event){
             activeCell = cell;
         }
     });
-    if (!activeCell){ return; }
+    if (!activeCell || activeCell.style.color == 'black'){ return; }
     if (event.key >= '1' && event.key <= 9){
         activeCell.textContent = event.key;
         activeCell.style.color = "rgb(20, 78, 133)";
     } else if (event.key == 'Backspace' || event.key == 'Delete' || event.key === ' '){
         activeCell.textContent = "";
+        activeCell.style.color = "black";
 
     }
     send_board();
@@ -75,17 +76,20 @@ function scrapeColorFromPage(){
     return colors;
 }
 
-function updateSudoku(board, colors){
+function updateSudoku(board, colors=null){
     const rows = document.querySelectorAll("#sudoku tr");
     for (let i=0; i<9; i++){
         const cells = rows[i].querySelectorAll("td");
         for (let j=0; j<9; j++){
             if (board[i][j] == 0){
                 cells[j].textContent = ' ';
-                cells[j].style.color = colors[i*9+j];
             } else { 
                 cells[j].textContent = board[i][j];
+            }
+            if (colors){
                 cells[j].style.color = colors[i*9+j];
+            } else {
+                cells[j].style.color = "black";
             }
         }
     }
@@ -110,6 +114,9 @@ number_btns.forEach(button => {
         const number = e.target.innerText;
         const allCells = document.querySelectorAll("#sudoku td");
         allCells.forEach(cell => {
+            if (cell.style.color == "black"){
+                return;
+            }
             if (cell.style.backgroundColor == "lightblue" || cell.style.backgroundColor == "rgb(173, 216, 230)"){
                 cell.textContent = number;
                 cell.style.color = "rgb(20, 78, 133)";
@@ -134,3 +141,15 @@ function send_board(){
     }
 }
 
+const diff_btns = document.querySelectorAll(".diff-btn");
+
+diff_btns.forEach(button => {
+    button.addEventListener('click', getGeneratedBoard);
+});
+
+async function getGeneratedBoard(){
+    const response = await fetch("https://sudoku-game-and-solver.onrender.com/generate_board");
+    const data = await response.json();
+    const colors = new Array(81).fill("black");
+    updateSudoku(data.board, colors);
+}

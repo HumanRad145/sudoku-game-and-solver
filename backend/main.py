@@ -47,6 +47,17 @@ async def get_sudoku_board(payload: SudokuPayload):
 
     return {"solved": solved}
 
+@app.get('/generate_board')
+async def generate_board():
+    result = subprocess.run(["./sudoku_generate_board"],
+                            text=True,
+                            capture_output=True)
+    
+    nums = list(map(int, result.stdout.split()))
+    board = [nums[i*9:(i+1)*9] for i in range(9)]
+    
+    return {"board": board}
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
