@@ -23,7 +23,7 @@ document.addEventListener('keydown', function(event){
         }
     });
     if (!activeCell) {return; } 
-    if(activeCell.style.color == 'black' && activeCell.textContent  >= 1 && activeCellCell.textContent <= 9 ){ return; }
+    if(activeCell.style.color == 'black' && activeCell.textContent  >= 1 && activeCell.textContent <= 9 ){ return; }
     if (event.key >= '1' && event.key <= 9){
         activeCell.textContent = event.key;
         activeCell.style.color = "rgb(20, 78, 133)";
@@ -43,6 +43,8 @@ document.addEventListener('keydown', function(event){
     send_board();
 
 })
+
+
 
 function showPopup(popupId, duration = 3000){
     const popup = document.getElementById(popupId);
@@ -136,7 +138,7 @@ number_btns.forEach(button => {
         const number = e.target.innerText;
         const allCells = document.querySelectorAll("#sudoku td");
         allCells.forEach(cell => {
-            if (cell.style.color == "black"){
+            if (cell.style.color == "black" && cell.textContent  >= 1 && cell.textContent <= 9){
                 return;
             }
             if (cell.style.backgroundColor == "lightblue" || cell.style.backgroundColor == "rgb(173, 216, 230)"){
@@ -173,6 +175,7 @@ function send_board(){
 const diff_btns = document.querySelectorAll(".diff-btn");
 
 diff_btns.forEach(button => {
+    document.getElementById('solved-popup-window').style.display = 'none';
     button.addEventListener('click', getGeneratedBoard);
 });
 
