@@ -5,7 +5,6 @@
 using namespace std;
 
 int main(){
-    srand(time(0));
     int board[9][9] = {};
     randomBoard(board, 0, 0);
     int count = 50, removed = 0, attempts = 0, maxAttempts = 200;

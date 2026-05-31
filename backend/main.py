@@ -60,7 +60,8 @@ async def get_sudoku_board(payload: SudokuPayload):
 async def generate_board():
     result = subprocess.run(["./sudoku_generate_board"],
                             text=True,
-                            capture_output=True)
+                            capture_output=True,
+                            timeout=15)
     
     nums = list(map(int, result.stdout.split()))
     board = [nums[i*9:(i+1)*9] for i in range(9)]

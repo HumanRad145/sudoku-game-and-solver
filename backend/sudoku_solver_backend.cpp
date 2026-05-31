@@ -12,10 +12,15 @@ int main(){
         }
     }
 
-    if (!safe(board)){
-        return 1;
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            int num = board[i][j];
+            if (!safe(board, i, j, num)){
+                return 1;
+            }
+        }
     }
-
+    
     bool solved;
     solved = solve(board, 0,0);
     if (solved == true){
