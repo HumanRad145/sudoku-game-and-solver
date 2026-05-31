@@ -186,6 +186,7 @@ async function getGeneratedBoard(){
     const data = await response.json();
     const colors = new Array(81).fill("black");
     updateSudoku(data.board, colors);
+    send_board();
 }
 
 function checkDone(){
