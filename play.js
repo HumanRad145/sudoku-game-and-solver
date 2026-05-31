@@ -120,7 +120,7 @@ number_btns.forEach(button => {
     })
 })
 
-var ws = new WebSocket("ws://127.0.0.1:8000/ws");
+var ws = new WebSocket("ws://sudoku-game-and-solver.onrender.com/ws");
 ws.onmessage = function(event){
     const data = JSON.parse(event.data);
     updateSudoku(data.board, data.colors);
@@ -133,3 +133,4 @@ function send_board(){
         ws.send(JSON.stringify({ board: board, colors: colors}));
     }
 }
+
