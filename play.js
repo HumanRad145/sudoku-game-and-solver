@@ -143,6 +143,9 @@ number_btns.forEach(button => {
                 activeCell = cell;
             }
         });
+        if (!activeCell) {
+            return;  // Exit early if no cell selected
+        }
         if (activeCell.style.color == "black" && activeCell.textContent  >= 1 && activeCell.textContent <= 9){
             return;
         }
