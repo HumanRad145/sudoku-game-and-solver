@@ -6,8 +6,9 @@ using namespace std;
 
 bool safe(int grid[][9]);
 bool solve(int grid[][9], int r, int c);
-int solutionCount(int grid[][9], int r, int c);
+int solutionCount(int grid[][9], int r, int c, int maxCount);
 bool randomBoard(int grid[][9], int r, int c);
+int numberGenerate(int min, int max);
 
 
 #endif

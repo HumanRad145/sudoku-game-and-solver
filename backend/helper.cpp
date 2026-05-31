@@ -95,25 +95,28 @@ bool randomBoard(int grid[][9], int r, int c){
     
 }
 
-int solutionCount(int grid[][9], int r, int c){
+
+
+int solutionCount(int grid[][9], int r, int c, int maxCount){
     if (r == 9){ //Base case where it is finished
         return 1;
     }
     if (c == 9){
-        return solutionCount(grid, r+1, 0);
+        return solutionCount(grid, r+1, 0, maxCount);
     }
     if (grid[r][c] == 0){ //check if it's an empty cell
         int count = 0;
         for (int i = 1; i <= 9; ++i){ //loop from 1 to 9 (to try the numbers)
             grid[r][c] = i;
             if (safe(grid)){
-                count += solutionCount(grid, r, c+1);
+                count += solutionCount(grid, r, c+1, maxCount);
+                if (count >= maxCount) break;
             }
             grid[r][c] = 0;
         }
         return count;
     }
     else { //already filled cell
-        return solutionCount(grid, r, c+1);
+        return solutionCount(grid, r, c+1, maxCount);
     }
 }

@@ -161,3 +161,20 @@ number_btns.forEach(button => {
     })
 })
 
+async function checkDone() {
+    const board = scrapeSudokuFromPage();
+
+    const response = await fetch("https://sudoku-game-and-solver.onrender.com/get_sudoku_board", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({board})
+    });
+
+    const data = await response.json();
+    if (board === data){
+        return true;
+    } else { 
+        return false; 
+    }
+    
+}

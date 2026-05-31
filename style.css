@@ -76,8 +76,8 @@ border-left: 2px solid black;
 }
 
 #sudoku-grid {
-display:flex;
-justify-content: center;
+    display:flex;
+    justify-content: center;
 }
 
 #sudoku-controls {
@@ -115,4 +115,44 @@ justify-content: center;
 .diff-btn {
     text-decoration: underline;
     cursor: pointer;
+}
+
+#solved-popup-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.window-content {
+    background-color: lightcyan;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1001;
+}
+
+.window-content button {
+    width: 60px;
+    height: 30px;
+    margin: 0 20px;
+}
+
+#wrong-popup-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
 }

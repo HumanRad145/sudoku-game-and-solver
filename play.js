@@ -22,10 +22,17 @@ document.addEventListener('keydown', function(event){
             activeCell = cell;
         }
     });
-    if (!activeCell || activeCell.style.color == 'black'){ return; }
+    if (!activeCell) {return; } 
+    if(activeCell.style.color == 'black' && activeCell.textContent  >= 1 && activeCellCell.textContent <= 9 ){ return; }
     if (event.key >= '1' && event.key <= 9){
         activeCell.textContent = event.key;
         activeCell.style.color = "rgb(20, 78, 133)";
+        if (checkDone() ==  true){
+            if (checkCorrect() == true){
+
+            }
+        }
+        
     } else if (event.key == 'Backspace' || event.key == 'Delete' || event.key === ' '){
         activeCell.textContent = "";
         activeCell.style.color = "black";
@@ -48,7 +55,7 @@ function selectCell(cell){
 
 }
 
-function scrapeSudokuFromPage(){
+function scrapeSudokuFromPage(excludeBlue = false){
     const board = [];
     const rows = document.querySelectorAll("#sudoku tr");
 
@@ -58,7 +65,11 @@ function scrapeSudokuFromPage(){
         
         for (let j=0; j < cells.length; j++){
             const text = cells[j].textContent.trim();
-            row.push(text === ""? 0 : Number(text));
+            if (excludeBlue && cells[j].style.color == "rgb(20, 78, 133)"){
+                row.push(0);
+            } else {
+                row.push(text === ""? 0 : Number(text));
+            }
         }
 
         board.push(row);
@@ -122,6 +133,13 @@ number_btns.forEach(button => {
                 cell.style.color = "rgb(20, 78, 133)";
                 console.log(cell, cell.style.color);
                 send_board();
+                if (checkDone() ==  true){
+                    if (checkCorrect() == true){
+                        alert("Yay. You've solved it.");
+                    } else {
+                        alert("Wrong answer!");
+                    }
+                }
             }
         });
     })
@@ -152,4 +170,39 @@ async function getGeneratedBoard(){
     const data = await response.json();
     const colors = new Array(81).fill("black");
     updateSudoku(data.board, colors);
+}
+
+function checkDone(){
+    const cells = document.querySelectorAll("#sudoku td");
+    for (let cell of cells){
+        if (cell.textContent == "" || cell.textContent == " "){
+            console.log("Not yet done")
+            return false;
+        }
+    }
+    console.log("DONE")
+    return true;
+}
+
+async function checkCorrect() {
+    const board = scrapeSudokuFromPage(excludeBlue = true);
+    const filledBoard = scrapeSudokuFromPage();
+
+    const response = await fetch("https://sudoku-game-and-solver.onrender.com/get_sudoku_board", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({board})
+    });
+
+    const data = await response.json();
+    console.log(filledBoard);
+    console.log(data.solved);
+    if (JSON.stringify(filledBoard) === JSON.stringify(data.solved)){
+        console.log("Correct Board, You got it")
+        return true; 
+    } else { 
+        console.log("Incorrect Board")
+        return false;
+    }
+    
 }
