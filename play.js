@@ -158,7 +158,7 @@ number_btns.forEach(button => {
     })
 })
 
-var ws = new WebSocket("ws://sudoku-game-and-solver.onrender.com/ws");
+var ws = new WebSocket("wss://sudoku-game-and-solver.onrender.com/ws");
 ws.onmessage = function(event){
     const data = JSON.parse(event.data);
     updateSudoku(data.board, data.colors);
