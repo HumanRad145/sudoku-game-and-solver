@@ -137,28 +137,24 @@ number_btns.forEach(button => {
     button.addEventListener('click', (e) => {
         const number = e.target.innerText;
         const allCells = document.querySelectorAll("#sudoku td");
-        let activeCell = null;
         allCells.forEach(cell => {
             if (cell.style.backgroundColor == "lightblue" || cell.style.backgroundColor == "rgb(173, 216, 230)"){
-                activeCell = cell;
+                if (cell.style.color !== "black") {
+                    cell.textContent = number;
+                    cell.style.color = "rgb(20, 78, 133)";
+                    send_board();
+                    
+                    if (checkDone() == true){
+                        if (checkCorrect() == true){
+                            document.getElementById('solved-popup-window').style.display = 'flex';
+                        } else {
+                            showPopup('wrong-popup-window', 2000);
+                        }
+                    }
+                }
             }
+            
         });
-        if (!activeCell) {
-            return;  // Exit early if no cell selected
-        }
-        if (activeCell.style.color == "black" && activeCell.textContent  >= 1 && activeCell.textContent <= 9){
-            return;
-        }
-        activeCell.textContent = number;
-        activeCell.style.color = "rgb(20, 78, 133)";
-        send_board();
-        if (checkDone() ==  true){
-            if (checkCorrect() == true){
-                alert("Yay. You've solved it.");
-            } else {
-                alert("Wrong answer!");
-            }
-        }
     })
 })
 
