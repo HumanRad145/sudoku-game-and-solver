@@ -24,8 +24,17 @@ class ConnectionManager:
     async def send_board(self, board: str, websocket: WebSocket):
         await websocket.send_text(board)
     async def broadcast(self, board: str):
+        dead_connections = []
         for connection in self.active_connections:
-            await connection.send_text(board)
+            try:
+                await connection.send_text(board)
+            except Exception as e:
+                print(f"Failed to send to connection: {e}")
+                dead_connections.append(connection)
+        
+        # Remove dead connections
+        for dead in dead_connections:
+            self.disconnect(dead)
 
 manager = ConnectionManager()
 
