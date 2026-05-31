@@ -137,24 +137,26 @@ number_btns.forEach(button => {
     button.addEventListener('click', (e) => {
         const number = e.target.innerText;
         const allCells = document.querySelectorAll("#sudoku td");
+        let activeCell = null;
         allCells.forEach(cell => {
-            if (cell.style.color == "black" && cell.textContent  >= 1 && cell.textContent <= 9){
-                return;
-            }
             if (cell.style.backgroundColor == "lightblue" || cell.style.backgroundColor == "rgb(173, 216, 230)"){
-                cell.textContent = number;
-                cell.style.color = "rgb(20, 78, 133)";
-                console.log(cell, cell.style.color);
-                send_board();
-                if (checkDone() ==  true){
-                    if (checkCorrect() == true){
-                        alert("Yay. You've solved it.");
-                    } else {
-                        alert("Wrong answer!");
-                    }
-                }
+                activeCell = cell;
             }
         });
+        if (cell.style.color == "black" && cell.textContent  >= 1 && cell.textContent <= 9){
+            return;
+        }
+        cell.textContent = number;
+        cell.style.color = "rgb(20, 78, 133)";
+        console.log(cell, cell.style.color);
+        send_board();
+        if (checkDone() ==  true){
+            if (checkCorrect() == true){
+                alert("Yay. You've solved it.");
+            } else {
+                alert("Wrong answer!");
+            }
+        }
     })
 })
 
